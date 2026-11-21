@@ -3,11 +3,27 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package labsemana6;
-
 /**
  *
  * @author marlo
  */
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 public class ComandosArchivos {
-    
+    private EstadoConsola estado;
+ public ComandosArchivos(EstadoConsola estado) {
+ this.estado = estado;
+ }
+ public String date() {
+ SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+ return "La fecha actual es: " + formato.format(new Date());
+ }
+ public String time() {
+ SimpleDateFormat formato = new SimpleDateFormat("HH:mm:ss");
+ return "La hora actual es: " + formato.format(new Date());
+ }
 }
