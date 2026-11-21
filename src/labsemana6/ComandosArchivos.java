@@ -96,14 +96,45 @@ public class ComandosArchivos {
             return "Acceso denegado";
         }
         if (!viejo.exists()) {
-            return "El sistema no puede encontrar " + partes[0] + ".";
+            return "El sistema no puede encontrar " + partes[0];
         }
         if (nuevo.exists()) {
-            return "Ya existe un archivo o carpeta llamado " + partes[1] + ".";
+            return "Ya existe un archivo o carpeta llamado " + partes[1];
         }
         if (viejo.renameTo(nuevo)) {
-            return partes[0] + " renombrado a " + partes[1] + ".";
+            return partes[0] + " renombrado a " + partes[1];
         }
-            return "No se pudo renombrar " + partes[0] + ".";
+            return "No se pudo renombrar " + partes[0];
+    }
+    public String copy(String args) {
+        String[] partes = args.split("\\s+");
+        if (args.isEmpty() || partes.length != 2) {
+            return "La sintaxis del comando no es correcta,uso: Copy <origen> <destino>";
         }
+        File origen = estado.resolver(partes[0]);
+        File destino = estado.resolver(partes[1]);
+        if (origen==null|| destino== null) {
+            return "Acceso denegado.";
+        }
+        if (!origen.exists()||origen.isDirectory()) {
+            return "El sistema no puede encontrar el archivo " + partes[0];
+        }
+        if (destino.exists()){
+            return "Ya existe un archivo llamado " + partes[1];
+        }
+        try {
+            FileReader fr = new FileReader(origen);
+            FileWriter fw = new FileWriter(destino);
+            int c;
+            while ((c=fr.read())!=-1) {
+                fw.write(c);
+            }
+            fr.close();
+            fw.close();
+        } catch (IOException e) {
+            return "eror al copiar: " + e.getMessage();
+        }
+        return " 1 archivo(s) copiado(s)!";
+    }
+    
 }
