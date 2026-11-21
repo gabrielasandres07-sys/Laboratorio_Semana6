@@ -23,4 +23,21 @@ public class ComandosCarpetas {
         this.estado = estado;
     }
 
+    public String mkdir(String nombre) {
+        if (nombre.isEmpty()) {
+            return "La sintaxis del comando no es correcta.";
+        }
+        File carpeta = estado.resolver(nombre);
+        if (carpeta == null) {
+            return "Acceso denegado.";
+        }
+        if (carpeta.exists()) {
+            return "Ya existe una carpeta o archivo llamado " + nombre + ".";
+        }
+        if (carpeta.mkdir()) {
+            return "Carpeta " + nombre + " creada.";
+        }
+        return "No se pudo crear la carpeta " + nombre + ".";
+    }
+
 }
