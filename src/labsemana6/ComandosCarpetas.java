@@ -61,4 +61,36 @@ public class ComandosCarpetas {
         return "No se pudo crear el archivo " + nombre + ".";
     }
 
+    public String rm(String nombre) {
+        if (nombre.isEmpty()) {
+            return "La sintaxis del comando no es correcta.";
+        }
+        File f = estado.resolver(nombre);
+        if (f == null) {
+            return "Acceso denegado.";
+        }
+        if (!f.exists()) {
+            return "No se encuentra " + nombre + ".";
+        }
+        if (estado.estaDentroDe(estado.getActual(), f)) {
+            return "No se puede eliminar la carpeta actual.";
+        }
+        if (borrarRecursivo(f)) {
+            return nombre + " eliminado.";
+        }
+        return "No se pudo eliminar " + nombre + ".";
+    }
+
+    private boolean borrarRecursivo(File f) {
+        if (f.isDirectory()) {
+            File[] hijos = f.listFiles();
+            if (hijos != null) {
+                for (File hijo : hijos) {
+                    borrarRecursivo(hijo);
+                }
+            }
+        }
+        return f.delete();
+    }
+
 }
