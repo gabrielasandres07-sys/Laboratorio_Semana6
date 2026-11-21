@@ -42,5 +42,47 @@ public class ComandosArchivos {
         }
         return null;
     }
-
+    public String guardarTexto(File archivo, String texto, boolean agregar) {
+        try {
+            FileWriter fw = new FileWriter(archivo, agregar);
+            fw.write(texto);
+            fw.close();
+        }catch (IOException e) {
+            return "Error al escribir: " + e.getMessage();
+        }
+        if (agregar) {
+            return "Texto agregado a " + archivo.getName() + ".";
+        }
+        return "Texto guardado en " + archivo.getName() + ".";
+    }
+    public String rd(String nombre) {
+        if (nombre.isEmpty()) {
+            return "La sintaxis del comando no es correcta.";
+        }
+        File f = estado.resolver(nombre);
+        if (f==null) {
+            return "Acceso denegado.";
+        }
+        if (!f.exists()||f.isDirectory()) {
+            return "El sistema no puede encontrar el archivo "+ nombre + ".";
+        }
+        String contenido = "";
+        try {
+            FileReader fr = new FileReader(f);
+            int c;
+            while ((c = fr.read()) != -1) {
+            contenido += (char) c;
+            }
+            fr.close();
+        }catch (IOException e) {
+            return "Error al leer: " + e.getMessage();
+        }
+        if (contenido.isEmpty()) {
+            return "(El archivo esta vacio)";
+        }
+        if (contenido.endsWith("\n")) {
+            contenido = contenido.substring(0, contenido.length() - 1);
+        }
+        return contenido;
+    }
 }
