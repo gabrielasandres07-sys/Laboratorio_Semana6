@@ -85,4 +85,25 @@ public class ComandosArchivos {
         }
         return contenido;
     }
+    public String ren(String args) {
+        String[] partes = args.split("\\s+");
+        if (args.isEmpty() || partes.length != 2) {
+            return "La sintaxis del comando no es correcta. Uso: Ren <actual> <nuevo>";
+        }
+        File viejo = estado.resolver(partes[0]);
+        File nuevo = estado.resolver(partes[1]);
+        if (viejo == null || nuevo == null) {
+            return "Acceso denegado";
+        }
+        if (!viejo.exists()) {
+            return "El sistema no puede encontrar " + partes[0] + ".";
+        }
+        if (nuevo.exists()) {
+            return "Ya existe un archivo o carpeta llamado " + partes[1] + ".";
+        }
+        if (viejo.renameTo(nuevo)) {
+            return partes[0] + " renombrado a " + partes[1] + ".";
+        }
+            return "No se pudo renombrar " + partes[0] + ".";
+        }
 }
