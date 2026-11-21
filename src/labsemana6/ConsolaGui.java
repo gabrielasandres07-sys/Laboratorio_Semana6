@@ -59,7 +59,7 @@ public class ConsolaGui extends JFrame {
 
    // Diseno ventana
     private void configurarVentana() {
-        setTitle("Consola de Comandos - Equipo 4");
+        setTitle("Consola de Comandos ");
         setSize(850, 520);
         setMinimumSize(new Dimension(700, 450));
         setLocationRelativeTo(null);
