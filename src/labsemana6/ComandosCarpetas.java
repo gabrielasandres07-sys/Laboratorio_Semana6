@@ -40,4 +40,25 @@ public class ComandosCarpetas {
         return "No se pudo crear la carpeta " + nombre + ".";
     }
 
+    public String mfile(String nombre) {
+        if (nombre.isEmpty()) {
+            return "La sintaxis del comando no es correcta.";
+        }
+        File archivo = estado.resolver(nombre);
+        if (archivo == null) {
+            return "Acceso denegado.";
+        }
+        if (archivo.exists()) {
+            return "Ya existe una carpeta o archivo llamado " + nombre + ".";
+        }
+        try {
+            if (archivo.createNewFile()) {
+                return "Archivo " + nombre + " creado.";
+            }
+        } catch (IOException e) {
+            return "Error al crear el archivo: " + e.getMessage();
+        }
+        return "No se pudo crear el archivo " + nombre + ".";
+    }
+
 }
