@@ -131,9 +131,13 @@ public class ConsolaGui extends JFrame {
     }
 
     private void bienvenida() {
-        imprimir("Consola Simulada - Escriba Help para ver los comandos.");
+         imprimir("Microsoft Windows [Versión 10.0.22631.4460]");
+        imprimir("(c) Microsoft Corporation. Todos los derechos reservados.");
         imprimir("");
-    }
+        imprimir("Escriba Help para ver la lista de comandos.");
+        imprimir("");
+   }
+    
 
    
     public void imprimir(String texto) {
