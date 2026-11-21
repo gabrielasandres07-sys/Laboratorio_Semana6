@@ -54,7 +54,7 @@ public class ConsolaGui extends JFrame {
 
         configurarVentana();
         crearComponentes();
-        mostrarBienvenida();
+        Bienvenida();
     }
 
    // Diseno ventana
@@ -117,7 +117,7 @@ public class ConsolaGui extends JFrame {
         campoEntrada.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                procesarEntrada();
+                Entrada();
             }
         });
 
@@ -130,7 +130,7 @@ public class ConsolaGui extends JFrame {
         });
     }
 
-    private void mostrarBienvenida() {
+    private void Bienvenida() {
         imprimir("Consola Simulada - Escriba Help para ver los comandos.");
         imprimir("");
     }
@@ -144,7 +144,7 @@ public class ConsolaGui extends JFrame {
     
 
    
-    private void procesarEntrada() {
+    private void Entrada() {
         String linea = campoEntrada.getText();
         campoEntrada.setText("");                 
 
@@ -162,4 +162,48 @@ public class ConsolaGui extends JFrame {
             lblPrompt.setText(estado.getPrompt());
         }
     }
+     
+
+    
+    private void limpiarPantalla() {
+        areaSalida.setText("");
+    }
+
+    
+    private void salir() {
+        dispose();
+        System.exit(0);
+    }
+
+    
+    private String ComandoNoReconocido(String comando) {
+        return "'" + comando + "' no se reconoce como un comando interno o externo,\n"
+                + "programa o archivo por lotes ejecutable.";
+    }
+
+    // lista de comados
+    private String ayuda() {
+        return "Comandos disponibles (respetar mayúsculas y minúsculas):\n"
+                + "  Mkdir <nombre>           Crea una nueva carpeta.\n"
+                + "  Mfile <nombre.ext>       Crea un nuevo archivo.\n"
+                + "  Rm <nombre>              Elimina un archivo o carpeta (con su contenido).\n"
+                + "  Cd <carpeta>             Cambia a la carpeta indicada.\n"
+                + "  ..                       Regresa a la carpeta anterior.\n"
+                + "  Dir                      Lista los archivos y carpetas actuales.\n"
+                + "  Date                     Muestra la fecha actual.\n"
+                + "  Time                     Muestra la hora actual.\n"
+                + "  Wr <archivo.ext>         Escribe texto en un archivo (termina con EXIT).\n"
+                + "  Rd <archivo.ext>         Muestra el contenido de un archivo.\n"
+                + "  Ap <archivo.ext>         Agrega texto al final de un archivo (termina con EXIT).\n"
+                + "  Ren <actual> <nuevo>     Renombra un archivo o carpeta.\n"
+                + "  Copy <origen> <destino>  Copia un archivo a uno nuevo.\n"
+                + "  Find <nombre>            Busca archivos o carpetas por nombre.\n"
+                + "  Info <nombre>            Muestra tipo, ruta, tamaño y última modificación.\n"
+                + "  Tree                     Muestra el árbol de carpetas y archivos.\n"
+                + "  Grep <texto> <archivo>   Busca un texto dentro de un archivo.\n"
+                + "  Cls                      Limpia la pantalla.\n"
+                + "  Help                     Muestra esta ayuda.\n"
+                + "  Exit                     Cierra la consola.";
+    }
+
 }
