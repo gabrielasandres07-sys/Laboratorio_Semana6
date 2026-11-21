@@ -110,7 +110,7 @@ public class ComandosCarpetas {
 
     public String regresar() {
         if (estado.getActual().equals(estado.getRaiz())) {
-            return "Ya se encuentra en la carpeta raiz.";
+            return "Ya se encuentra en la carpeta raíz.";
         }
         estado.setActual(estado.getActual().getParentFile());
         return "";

@@ -28,17 +28,17 @@ public class ComandosArchivos {
     }
     public String validarEscritura(String nombre, boolean agregar) {
         if (nombre.isEmpty()) {
-            return "La sintaxis del comando no es correcta";
+            return "La sintaxis del comando no es correcta.";
         }
         File f = estado.resolver(nombre);
         if (f == null) {
-            return "acceso denegado";
+            return "Acceso denegado.";
         }
         if (f.isDirectory()) {
-            return nombre + " eso es una carpeta, no un archivo";
+            return nombre + " es una carpeta, no un archivo.";
         }
         if (agregar && !f.exists()) {
-            return "El sistema no encuentra el archivo " + nombre + ".";
+            return "El sistema no puede encontrar el archivo " + nombre + ".";
         }
         return null;
     }
@@ -78,7 +78,7 @@ public class ComandosArchivos {
             return "Error al leer: " + e.getMessage();
         }
         if (contenido.isEmpty()) {
-            return "(El archivo esta vacio)";
+            return "(El archivo está vacío)";
         }
         if (contenido.endsWith("\n")) {
             contenido = contenido.substring(0, contenido.length() - 1);
@@ -93,23 +93,23 @@ public class ComandosArchivos {
         File viejo = estado.resolver(partes[0]);
         File nuevo = estado.resolver(partes[1]);
         if (viejo == null || nuevo == null) {
-            return "Acceso denegado";
+            return "Acceso denegado.";
         }
         if (!viejo.exists()) {
-            return "El sistema no puede encontrar " + partes[0];
+            return "El sistema no puede encontrar " + partes[0] + ".";
         }
         if (nuevo.exists()) {
-            return "Ya existe un archivo o carpeta llamado " + partes[1];
+            return "Ya existe un archivo o carpeta llamado " + partes[1] + ".";
         }
         if (viejo.renameTo(nuevo)) {
-            return partes[0] + " renombrado a " + partes[1];
+            return partes[0] + " renombrado a " + partes[1] + ".";
         }
-            return "No se pudo renombrar " + partes[0];
+            return "No se pudo renombrar " + partes[0] + ".";
     }
     public String copy(String args) {
         String[] partes = args.split("\\s+");
         if (args.isEmpty() || partes.length != 2) {
-            return "La sintaxis del comando no es correcta,uso: Copy <origen> <destino>";
+            return "La sintaxis del comando no es correcta. Uso: Copy <origen> <destino>";
         }
         File origen = estado.resolver(partes[0]);
         File destino = estado.resolver(partes[1]);
@@ -117,10 +117,10 @@ public class ComandosArchivos {
             return "Acceso denegado.";
         }
         if (!origen.exists()||origen.isDirectory()) {
-            return "El sistema no puede encontrar el archivo " + partes[0];
+            return "El sistema no puede encontrar el archivo " + partes[0] + ".";
         }
         if (destino.exists()){
-            return "Ya existe un archivo llamado " + partes[1];
+            return "Ya existe un archivo llamado " + partes[1] + ".";
         }
         try {
             FileReader fr = new FileReader(origen);
@@ -132,9 +132,9 @@ public class ComandosArchivos {
             fr.close();
             fw.close();
         } catch (IOException e) {
-            return "eror al copiar: " + e.getMessage();
+            return "Error al copiar: " + e.getMessage();
         }
-        return " 1 archivo(s) copiado(s)!";
+        return "        1 archivo(s) copiado(s).";
     }
     
 }

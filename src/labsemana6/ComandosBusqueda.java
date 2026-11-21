@@ -25,15 +25,15 @@ public class ComandosBusqueda {
 
     public String find(String texto) {
         if (texto.isEmpty()) {
-            return "La sintaxis del comando es invalida";
+            return "La sintaxis del comando no es correcta.";
         }
         encontrados=0;
         String resultado=buscar(estado.getActual(),texto.toLowerCase());
         
         if (encontrados==0) {
-            return "No se encontro ningun archivo o carpeta con \""+texto+"\"";
+            return "No se encontró ningún archivo o carpeta con \""+texto+"\".";
         }
-        return resultado+encontrados+" resultado(s) encontrado(s)";
+        return resultado+encontrados+" resultado(s) encontrado(s).";
     }
     private String buscar(File carpeta, String texto) {
         String salida="";
@@ -55,22 +55,22 @@ public class ComandosBusqueda {
 
     public String info(String nombre) {
         if (nombre.isEmpty()) {
-            return "La sintaxis del comando es invalida";
+            return "La sintaxis del comando no es correcta.";
         }
         File f=estado.resolver(nombre);
         if (f==null) {
-            return "Acceso denegado";
+            return "Acceso denegado.";
         }
         
         if (!f.exists()) {
-            return "El sistema no puede encontrar "+nombre;
+            return "El sistema no puede encontrar "+nombre+".";
         }
         
         
         
         SimpleDateFormat formato=new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a");
         String tipo=f.isDirectory()?"Carpeta":"Archivo";
-        return "Nombre: "+f.getName()+"\n"+ "Tipo: "+tipo+"\n"+"Ruta: "+estado.getRutaVisible(f)+"\n"+"Tamaño: "+tamaño(f)+" bytes\n"+"Ultima modificacion: "+formato.format(new Date(f.lastModified()));
+        return "Nombre: "+f.getName()+"\n"+ "Tipo: "+tipo+"\n"+"Ruta: "+estado.getRutaVisible(f)+"\n"+"Tamaño: "+tamaño(f)+" bytes\n"+"Última modificación: "+formato.format(new Date(f.lastModified()));
     }
 
     private long tamaño(File f){
@@ -113,16 +113,16 @@ public class ComandosBusqueda {
         public String grep(String args) {
         int ultimoEspacio=args.lastIndexOf(' ');
         if (ultimoEspacio==-1) {
-            return "La sintaxis del comando no es correcta  Uso: Grep <texto> <archivo.ext>";
+            return "La sintaxis del comando no es correcta. Uso: Grep <texto> <archivo.ext>";
         }
         String texto=args.substring(0, ultimoEspacio).trim();
         String nombre=args.substring(ultimoEspacio + 1).trim();
         File f=estado.resolver(nombre);
         if(f==null) {
-            return "Acceso denegado";
+            return "Acceso denegado.";
         }
         if (!f.exists()||f.isDirectory()) {
-            return "El sistema no puede encontrar el archivo "+nombre;
+            return "El sistema no puede encontrar el archivo "+nombre+".";
         }
         String contenido = "";
         try {
@@ -133,21 +133,21 @@ public class ComandosBusqueda {
             }
             fr.close();
         } catch (IOException e) {
-            return "Error al leer el archivo";
+            return "Error al leer el archivo.";
         }
         String[]lineas=contenido.replace("\r", "").split("\n");
         String resultado="Buscando \""+texto+"\" en "+nombre+"...\n";
         int coincidencias=0;
         for (int i=0;i<lineas.length;i++) {
             if (lineas[i].toLowerCase().contains(texto.toLowerCase())) {
-                resultado+="Linea "+(i+1)+": "+lineas[i]+"\n";
+                resultado+="Línea "+(i+1)+": "+lineas[i]+"\n";
                 coincidencias++;
             }
         }
         if (coincidencias==0) {
-            return "No se encontraron coincidencias de \""+texto+"\" en "+nombre;
+            return "No se encontraron coincidencias de \""+texto+"\" en "+nombre+".";
         }
-        return resultado+coincidencias+" coincidencia(s) encontrada(s)";
+        return resultado+coincidencias+" coincidencia(s) encontrada(s).";
     }
 
    
