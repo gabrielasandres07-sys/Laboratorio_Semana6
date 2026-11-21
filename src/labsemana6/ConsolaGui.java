@@ -205,5 +205,35 @@ public class ConsolaGui extends JFrame {
                 + "  Help                     Muestra esta ayuda.\n"
                 + "  Exit                     Cierra la consola.";
     }
+   
+
+    
+    private void iniciarEscritura(String nombre, boolean agregar) {
+        String error = archivos.validarEscritura(nombre, agregar);
+        if (error == null) {
+            archivoEscritura = estado.resolver(nombre);
+            modoAgregar = agregar;
+            textoEscrito = "";
+            modoEscritura = true;
+            imprimir("Escriba el texto. Escriba EXIT (en mayúsculas) para terminar.");
+        } else {
+            imprimir(error);
+            imprimir("");
+        }
+    }
+
+   
+    private void procesarLineaEscritura(String linea) {
+        imprimir(linea);
+        if (linea.equals("EXIT")) {
+            modoEscritura = false;
+            imprimir(archivos.guardarTexto(archivoEscritura, textoEscrito, modoAgregar));
+            imprimir("");
+            archivoEscritura = null;
+            textoEscrito = "";
+        } else {
+            textoEscrito = textoEscrito + linea + "\n";
+        }
+    }
 
 }
