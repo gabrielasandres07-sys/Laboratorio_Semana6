@@ -6,6 +6,7 @@ package labsemana6;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Date;
 
 /**
  *Laboratorio de programacion II semana 6, 21/7/2026
@@ -90,11 +91,6 @@ public class ComandosBusqueda {
     public String tree() {
         return estado.getRutaVisible(estado.getActual())+arbol(estado.getActual(),"");
     }
-
-    
-    
-    
-    
     private String arbol(File carpeta, String sangria) {
         String salida="";
         File[] hijos=carpeta.listFiles();
