@@ -93,4 +93,19 @@ public class ComandosCarpetas {
         return f.delete();
     }
 
+    public String cd(String nombre) {
+        if (nombre.isEmpty()) {
+            return estado.getRutaVisible(estado.getActual());
+        }
+        File carpeta = estado.resolver(nombre);
+        if (carpeta == null) {
+            return "Acceso denegado.";
+        }
+        if (!carpeta.exists() || !carpeta.isDirectory()) {
+            return "El sistema no puede encontrar la ruta especificada.";
+        }
+        estado.setActual(carpeta);
+        return "";
+    }
+
 }
