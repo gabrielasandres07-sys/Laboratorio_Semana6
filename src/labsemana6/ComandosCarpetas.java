@@ -108,4 +108,40 @@ public class ComandosCarpetas {
         return "";
     }
 
+    public String regresar() {
+        if (estado.getActual().equals(estado.getRaiz())) {
+            return "Ya se encuentra en la carpeta raiz.";
+        }
+        estado.setActual(estado.getActual().getParentFile());
+        return "";
+    }
+
+    public String dir() {
+        File actual = estado.getActual();
+        File[] lista = actual.listFiles();
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy  hh:mm a");
+
+        String salida = " Directorio de " + estado.getRutaVisible(actual) + "\n\n";
+        int numArchivos = 0;
+        int numCarpetas = 0;
+        long bytes = 0;
+
+        if (lista != null) {
+            for (File f : lista) {
+                String fecha = formato.format(new Date(f.lastModified()));
+                if (f.isDirectory()) {
+                    salida += fecha + "    <DIR>          " + f.getName() + "\n";
+                    numCarpetas++;
+                } else {
+                    salida += fecha + "    " + String.format("%14d", f.length()) + " " + f.getName() + "\n";
+                    numArchivos++;
+                    bytes += f.length();
+                }
+            }
+        }
+        salida += "               " + numArchivos + " archivos     " + bytes + " bytes\n";
+        salida += "               " + numCarpetas + " carpetas";
+        return salida;
+    }
+
 }
