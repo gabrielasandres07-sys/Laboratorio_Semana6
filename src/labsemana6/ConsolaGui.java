@@ -221,8 +221,6 @@ public class ConsolaGui extends JFrame {
             imprimir("");
         }
     }
-
-   
     private void procesarLineaEscritura(String linea) {
         imprimir(linea);
         if (linea.equals("EXIT")) {
@@ -234,6 +232,118 @@ public class ConsolaGui extends JFrame {
         } else {
             textoEscrito = textoEscrito + linea + "\n";
         }
+    }
+
+    
+     private void procesarEntrada() {
+        String linea = campoEntrada.getText();
+        campoEntrada.setText("");                 
+
+        if (modoEscritura) {
+            procesarLineaEscritura(linea);        
+        } else {
+            imprimir(estado.getPrompt() + linea);  
+            ejecutar(linea.trim());                
+        }
+
+        actualizarPrompt();
+        campoEntrada.requestFocusInWindow();       
+    }
+     private void ejecutar(String linea) {
+        if (linea.isEmpty()) {
+            return;     
+        }
+
+      
+        String comando;
+        String args;
+        int espacio = linea.indexOf(' ');
+        if (espacio == -1) {
+            comando = linea;
+            args = "";
+        } else {
+            comando = linea.substring(0, espacio);
+            args = linea.substring(espacio + 1).trim();
+        }
+
+        String resultado;
+        switch (comando) {
+           
+            case "Mkdir":
+                resultado = carpetas.mkdir(args);
+                break;
+            case "Mfile":
+                resultado = carpetas.mfile(args);
+                break;
+            case "Rm":
+                resultado = carpetas.rm(args);
+                break;
+            case "Cd":
+                resultado = carpetas.cd(args);
+                break;
+            case "..":
+                resultado = carpetas.regresar();
+                break;
+            case "Dir":
+                resultado = carpetas.dir();
+                break;
+
+         
+            case "Date":
+                resultado = archivos.date();
+                break;
+            case "Time":
+                resultado = archivos.time();
+                break;
+            case "Rd":
+                resultado = archivos.rd(args);
+                break;
+            case "Ren":
+                resultado = archivos.ren(args);
+                break;
+            case "Copy":
+                resultado = archivos.copy(args);
+                break;
+            case "Wr":
+                iniciarEscritura(args, false);
+                return;
+            case "Ap":
+                iniciarEscritura(args, true);
+                return;
+
+          
+            case "Find":
+                resultado = busqueda.find(args);
+                break;
+            case "Info":
+                resultado = busqueda.info(args);
+                break;
+            case "Tree":
+                resultado = busqueda.tree();
+                break;
+            case "Grep":
+                resultado = busqueda.grep(args);
+                break;
+
+         
+            case "Cls":
+                limpiarPantalla();
+                return;
+            case "Help":
+                resultado = ayuda();
+                break;
+            case "Exit":
+                salir();
+                return;
+
+            default:
+                resultado = ComandoNoReconocido(comando);
+        }
+
+        if (resultado.isEmpty() == false) {
+            imprimir(resultado);
+        }
+        imprimir("");  
     }
 
 }
