@@ -54,7 +54,7 @@ public class ConsolaGui extends JFrame {
 
         configurarVentana();
         crearComponentes();
-        Bienvenida();
+        bienvenida();
     }
 
    // Diseno ventana
@@ -117,7 +117,7 @@ public class ConsolaGui extends JFrame {
         campoEntrada.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Entrada();
+               procesarEntrada() ;
             }
         });
 
@@ -130,7 +130,7 @@ public class ConsolaGui extends JFrame {
         });
     }
 
-    private void Bienvenida() {
+    private void bienvenida() {
         imprimir("Consola Simulada - Escriba Help para ver los comandos.");
         imprimir("");
     }
@@ -141,18 +141,6 @@ public class ConsolaGui extends JFrame {
         areaSalida.setCaretPosition(areaSalida.getDocument().getLength());
     }
 
-    
-
-   
-    private void Entrada() {
-        String linea = campoEntrada.getText();
-        campoEntrada.setText("");                 
-
-        imprimir(estado.getPrompt() + linea);     
-
-        actualizarPrompt();
-        campoEntrada.requestFocusInWindow();      
-    }
 
    
     private void actualizarPrompt() {
@@ -176,7 +164,7 @@ public class ConsolaGui extends JFrame {
     }
 
     
-    private String ComandoNoReconocido(String comando) {
+    private String comandoNoReconocido(String comando) {
         return "'" + comando + "' no se reconoce como un comando interno o externo,\n"
                 + "programa o archivo por lotes ejecutable.";
     }
@@ -337,7 +325,7 @@ public class ConsolaGui extends JFrame {
                 return;
 
             default:
-                resultado = ComandoNoReconocido(comando);
+                resultado = comandoNoReconocido(comando);
         }
 
         if (resultado.isEmpty() == false) {
